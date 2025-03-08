@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e  # Stop the script immediately if any command fails
 
+# Ensure setfacl is available; if not, install the 'acl' package.
+if ! command -v setfacl &> /dev/null; then
+  echo "setfacl command not found. Installing 'acl' package..."
+  sudo apt update && sudo apt install -y acl
+fi
+
 # Grant full permissions on /opt and all its contents to the current user without changing ownership
 echo "Granting full permissions on /opt to user $USER..."
 sudo setfacl -R -m u:"$USER":rwx /opt
@@ -9,7 +15,7 @@ sudo setfacl -dR -m u:"$USER":rwx /opt
 clear
 cat <<'EOF'
 ===============================================
-🚀 Deno & Zsh Setup Script 1.1
+🚀 Deno & Zsh Setup Script 1.5
 ===============================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
@@ -115,6 +121,7 @@ fi
 
 # Switch to Zsh immediately
 exec zsh
+
 
 
 
