@@ -1,4 +1,6 @@
 #!/bin/bash
+#TODO: ajouter la création de rep /home/JUWJU
+#TODO : Ajouter la connexion à Juwju via mot de passe et téléchargement de ./script et autre fichier dans /home/JUWJU
 #set -e  # Stop the script immediately if any command fails
 
 clear
