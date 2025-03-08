@@ -1,16 +1,5 @@
 #!/bin/bash
-set -e  # Stop the script immediately if any command fails
-
-# Ensure setfacl is available; if not, install the 'acl' package.
-if ! command -v setfacl &> /dev/null; then
-  echo "setfacl command not found. Installing 'acl' package..."
-  sudo apt update && sudo apt install -y acl
-fi
-
-# Grant full permissions on /opt and all its contents to the current user without changing ownership
-echo "Granting full permissions on /opt to user $USER..."
-sudo setfacl -R -m u:"$USER":rwx /opt
-sudo setfacl -dR -m u:"$USER":rwx /opt
+#set -e  # Stop the script immediately if any command fails
 
 clear
 cat <<'EOF'
@@ -38,12 +27,17 @@ This script will install and configure the necessary components in three steps:
 Press the SPACE BAR to continue or esc to exit...
 EOF
 
-# Read one character from user input.
-read -n1 -r key
-if [[ "$key" != " " ]]; then
-    echo -e "\nInstallation aborted."
-    exit 1
+
+# Ensure setfacl is available; if not, install the 'acl' package.
+if ! command -v setfacl &> /dev/null; then
+  echo "setfacl command not found. Installing 'acl' package..."
+  sudo apt update && sudo apt install -y acl
 fi
+
+# Grant full permissions on /opt and all its contents to the current user without changing ownership
+echo "Granting full permissions on /opt to user $USER..."
+sudo setfacl -R -m u:"$USER":rwx /opt
+sudo setfacl -dR -m u:"$USER":rwx /opt
 
 clear
 
@@ -113,11 +107,6 @@ echo "  2️⃣ Run 'deno --version' to verify the Deno installation."
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
-read -n1 -r -p "Press the SPACE BAR to continue and switch to Zsh..." key
-if [[ "$key" != " " ]]; then
-    echo -e "\nShell switch aborted."
-    exit 1
-fi
 
 # Switch to Zsh immediately
 exec zsh
