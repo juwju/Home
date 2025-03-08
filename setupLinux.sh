@@ -3,12 +3,15 @@
 # Opening message
 clear  # Correction de "lear" en "clear"
 echo "==============================================="
-echo "🚀 Deno & Zsh Setup Script 1.3"
+echo "🚀 Deno & Zsh Setup Script"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
 echo "   - If you don't have an account yet, go to **https://juwju.com** and create one."
 echo "   - You will need to log in during the setup process."
+echo ""
+echo "⚠️  NOTE: This script requires sudo privileges at certain steps."
+echo "   You will be prompted to enter your password during installation."
 echo ""
 echo "This script will install and configure the necessary components in three steps:"
 echo ""
@@ -20,7 +23,13 @@ echo "   - It offers built-in TypeScript support and secure-by-default execution
 echo ""
 echo "➡️ Once the installation is complete, the script will switch to Zsh automatically."
 echo ""
-read -n1 -r -p "Press SPACE to continue..." key
+read -n1 -r -p "Press SPACE to proceed, CTRL+C to quit..." key
+
+if [[ "$key" != " " ]]; then
+    echo "Installation aborted."
+    exit 1
+fi
+
 clear
 
 # Update system packages
@@ -98,3 +107,4 @@ read -n1 -r -p "Press SPACE to continue and switch to Zsh..." key
 
 # Appliquer les changements immédiatement
 exec zsh
+
