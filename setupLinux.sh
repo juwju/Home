@@ -6,7 +6,7 @@
 clear
 cat <<'EOF'
 ===============================================
-🚀 Deno & Zsh Setup Script 1.5
+🚀 Deno & Zsh Setup Script 1.6
 ===============================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
