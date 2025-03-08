@@ -7,7 +7,7 @@ echo "🚀 Deno & Zsh Setup Script"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
-echo "   - If you don’t have an account yet, go to **https://juwju.com** and create one."
+echo "   - If you don't have an account yet, go to **https://juwju.com** and create one."
 echo "   - You will need to log in during the setup process."
 echo ""
 echo "This script will install and configure the necessary components in three steps:"
@@ -52,22 +52,38 @@ else
   echo "Zsh is already the default shell."
 fi
 
-# Install Deno (without interactive prompt)
+# Install Deno with automated responses using here-document
 echo "Installing Deno..."
 export DENO_INSTALL="$HOME/.deno"
-curl -fsSL https://deno.land/x/install/install.sh | sh
 
-# Ensure Deno is added to PATH for Zsh
-echo "Adding Deno to PATH for Zsh..."
-echo 'export DENO_INSTALL="$HOME/.deno"' >> ~/.zshrc
-echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.zshrc
+# Use here-document to provide "Y" as answer to the PATH configuration prompt
+(
+echo "Y"  # Answer to "Edit shell configs to add deno to the PATH? (Y/n)"
+) | curl -fsSL https://deno.land/x/install/install.sh | sh
 
-# Force Zsh completion setup (bypass interactive prompt)
+# Ensure Deno is added to PATH for Zsh (in case the automated response didn't work)
+echo "Ensuring Deno is added to PATH for Zsh..."
+if ! grep -q 'export DENO_INSTALL="$HOME/.deno"' ~/.zshrc; then
+  echo 'export DENO_INSTALL="$HOME/.deno"' >> ~/.zshrc
+fi
+if ! grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.zshrc; then
+  echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.zshrc
+fi
+
+# Setup Deno autocompletion for Zsh with automated response
 echo "Setting up Deno autocompletion for Zsh..."
 mkdir -p ~/.zsh/completions
-deno completions zsh > ~/.zsh/completions/_deno
-echo 'fpath+=~/.zsh/completions' >> ~/.zshrc
-echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+
+# Use here-document to provide "zsh" as answer to the autocompletion prompt
+echo "zsh" | "$HOME/.deno/bin/deno" completions > ~/.zsh/completions/_deno
+
+# Add autocompletion configuration to .zshrc if not already present
+if ! grep -q 'fpath+=~/.zsh/completions' ~/.zshrc; then
+  echo 'fpath+=~/.zsh/completions' >> ~/.zshrc
+fi
+if ! grep -q 'autoload -Uz compinit && compinit' ~/.zshrc; then
+  echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+fi
 
 # Next steps message
 echo ""
