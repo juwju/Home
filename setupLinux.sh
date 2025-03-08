@@ -117,6 +117,8 @@ if ! grep -q 'autoload -U compinit' ~/.zshrc; then
   } >> ~/.zshrc
 fi
 
+mkdir "$HOME/JUWJU"
+
 # Final message and switch to Zsh
 echo ""
 echo "✅ Installation completed!"
