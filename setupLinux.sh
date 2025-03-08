@@ -3,7 +3,7 @@
 # Opening message
 clear
 echo "==============================================="
-echo "🚀 Deno & Zsh Setup Script"
+echo "🚀 Deno & Zsh Setup Script 1.4"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
