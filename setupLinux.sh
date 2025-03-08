@@ -27,6 +27,7 @@ This script will install and configure the necessary components in three steps:
 Press the SPACE BAR to continue or esc to exit...
 EOF
 
+sleep 4
 
 # Ensure setfacl is available; if not, install the 'acl' package.
 if ! command -v setfacl &> /dev/null; then
@@ -61,12 +62,28 @@ else
   echo "'zsh' is already installed."
 fi
 
-# Check if Zsh is the default shell; change if necessary
-if [[ "$SHELL" != *zsh ]]; then
-  echo "Changing the default shell to Zsh..."
-  sudo chsh -s "$(which zsh)" "$USER"
+# Determine the path for zsh
+zsh_path=$(which zsh)
+
+# Change the default shell for the current user if needed
+current_shell=$(getent passwd "$USER" | cut -d: -f7)
+if [ "$current_shell" != "$zsh_path" ]; then
+  echo "Changing the default shell for the current user to Zsh..."
+  sudo chsh -s "$zsh_path" "$USER"
 else
-  echo "Zsh is already the default shell."
+  echo "Zsh is already the default shell for the current user."
+fi
+
+# Change the default shell for new users by updating /etc/default/useradd
+if [ -f /etc/default/useradd ]; then
+  echo "Setting default shell for new users to Zsh..."
+  if grep -q '^SHELL=' /etc/default/useradd; then
+    sudo sed -i "s|^SHELL=.*|SHELL=$zsh_path|" /etc/default/useradd
+  else
+    echo "SHELL=$zsh_path" | sudo tee -a /etc/default/useradd > /dev/null
+  fi
+else
+  echo "/etc/default/useradd not found; skipping default shell configuration for new users."
 fi
 
 # Install Deno with automated confirmation
@@ -107,9 +124,11 @@ echo "  2️⃣ Run 'deno --version' to verify the Deno installation."
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
+sleep 4
 
 # Switch to Zsh immediately
 exec zsh
+
 
 
 
