@@ -3,9 +3,9 @@ set -e  # Stop the script immediately if any command fails
 
 clear
 cat <<'EOF'
-===============================================
-🚀 Deno & Zsh Setup Script 1.6
-===============================================
+=========================================================
+🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.6
+=========================================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
    - If you don't have an account yet, go to https://juwju.com and create one.
