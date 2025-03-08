@@ -26,13 +26,7 @@ This script will install and configure the necessary components in three steps:
 
 EOF
 
-read -n1 -r -p "Press y to continue oy anther key to abord..." key
-
-if [[ "$key" != "y" ]]; then
-    echo -e "\nInstall aborted."
-    exit 1
-fi
-
+sleep 4
 
 clear
 
@@ -102,13 +96,7 @@ echo "  2️⃣ Run 'deno --version' to verify the Deno installation."
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
-read -n1 -r -p "Press the y to continue and switch to Zsh..." key
-
-if [[ "$key" != "y" ]]; then
-    echo -e "\nShell switch aborted."
-    exit 1
-fi
-
+sleep 4
 
 # Switch to Zsh immediately
 exec zsh
