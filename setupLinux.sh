@@ -1,10 +1,10 @@
 #!/bin/bash
-set -e  # Stop the script immediately if any command fails
+#set -e  # Stop the script immediately if any command fails
 
 clear
 cat <<'EOF'
 =========================================================
-🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.8
+🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.9
 =========================================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
@@ -26,7 +26,7 @@ This script will install and configure the necessary components in three steps:
 
 EOF
 
-read -n1 -r -p "Press the y to continue oy anther key to abord..." key
+read -n1 -r -p "Press y to continue oy anther key to abord..." key
 
 if [[ "$key" != "y" ]]; then
     echo -e "\nInstall aborted."
