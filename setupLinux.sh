@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Opening message
-clear  # Correction de "lear" en "clear"
+clear
 echo "==============================================="
 echo "🚀 Deno & Zsh Setup Script"
 echo "==============================================="
@@ -23,7 +23,8 @@ echo "   - It offers built-in TypeScript support and secure-by-default execution
 echo ""
 echo "➡️ Once the installation is complete, the script will switch to Zsh automatically."
 echo ""
-read -n1 -r -p "Press SPACE to proceed, CTRL+C to quit..." key
+echo "Appuyez sur la BARRE D'ESPACE pour continuer ou CTRL+C pour quitter..."
+read -n1 -r key
 
 if [[ "$key" != " " ]]; then
     echo "Installation aborted."
@@ -31,6 +32,7 @@ if [[ "$key" != " " ]]; then
 fi
 
 clear
+
 
 # Update system packages
 echo "Updating system packages..."
