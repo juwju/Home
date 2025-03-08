@@ -96,8 +96,8 @@ echo "  2️⃣ Run 'deno --version' to verify the Deno installation."
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
-read -n1 -r -p "Press the SPACE BAR to continue and switch to Zsh..." key
-if [[ "$key" != " " ]]; then
+read -n1 -r -p "Press the y to continue and switch to Zsh..." key
+if [[ "$key" != "y" ]]; then
     echo -e "\nShell switch aborted."
     exit 1
 fi
