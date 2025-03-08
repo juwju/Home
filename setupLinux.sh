@@ -3,7 +3,7 @@
 # Opening message
 clear  # Correction de "lear" en "clear"
 echo "==============================================="
-echo "🚀 Deno & Zsh Setup Script 1.2"
+echo "🚀 Deno & Zsh Setup Script"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
@@ -53,16 +53,11 @@ else
   echo "Zsh is already the default shell."
 fi
 
-# Install Deno with automated response
+# Install Deno with automated response using -y flag
 echo "Installing Deno..."
 export DENO_INSTALL="$HOME/.deno"
-
-# Télécharger le script d'installation et le modifier pour automatiser la réponse
-curl -fsSL https://deno.land/install.sh > /tmp/deno_installer.sh
-# Remplacer la ligne qui demande une confirmation par une assignation directe
-sed -i 's/read -p "Edit shell configs to add deno to the PATH? (Y\/n) " yn/yn="Y"/g' /tmp/deno_installer.sh
-# Exécuter le script modifié
-bash /tmp/deno_installer.sh
+# Utilisation de l'option -y pour automatiser l'installation
+curl -fsSL https://deno.land/x/install/install.sh | sh -s -- -y
 
 # Assurer que Deno est ajouté au PATH pour Zsh
 echo "Ensuring Deno is added to PATH for Zsh..."
@@ -87,9 +82,6 @@ if ! grep -q 'autoload -Uz compinit && compinit' ~/.zshrc; then
   echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
 fi
 
-# Nettoyer les fichiers temporaires
-rm -f /tmp/deno_installer.sh
-
 # Message de fin
 echo ""
 echo "✅ Installation completed!"
@@ -104,3 +96,4 @@ read -n1 -r -p "Press SPACE to continue and switch to Zsh..." key
 
 # Appliquer les changements immédiatement
 exec zsh
+
