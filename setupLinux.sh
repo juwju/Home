@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e  # Stop the script immediately if any command fails
 
-# Clear screen and display the welcome message using a here-document
 clear
 cat <<'EOF'
 ===============================================
@@ -28,11 +27,11 @@ This script will install and configure the necessary components in three steps:
 Press the SPACE BAR to continue or esc to exit...
 EOF
 
-# Wait for a key press
+# Read one character from user input.
 read -n1 -r key
 if [[ "$key" != " " ]]; then
     echo -e "\nInstallation aborted."
-    exit 0
+    exit 1
 fi
 
 clear
@@ -111,3 +110,4 @@ fi
 
 # Switch to Zsh immediately
 exec zsh
+
