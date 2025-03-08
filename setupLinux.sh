@@ -3,7 +3,7 @@
 # Opening message
 clear  # Correction de "lear" en "clear"
 echo "==============================================="
-echo "🚀 Deno & Zsh Setup Script"
+echo "🚀 Deno & Zsh Setup Script 1.3"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
@@ -70,16 +70,18 @@ fi
 
 # Configuration de l'autocomplétion pour Zsh
 echo "Setting up Deno autocompletion for Zsh..."
-mkdir -p ~/.zsh/completions
-# Fournir "zsh" comme réponse à la question d'autocomplétion
-echo "zsh" | $HOME/.deno/bin/deno completions > ~/.zsh/completions/_deno
+mkdir -p ~/.zsh/completion
+
+# Spécifier explicitement "zsh" comme argument pour la commande completions
+$HOME/.deno/bin/deno completions zsh > ~/.zsh/completion/_deno
 
 # Ajouter la configuration d'autocomplétion à .zshrc si elle n'est pas déjà présente
-if ! grep -q 'fpath+=~/.zsh/completions' ~/.zshrc; then
-  echo 'fpath+=~/.zsh/completions' >> ~/.zshrc
+if ! grep -q 'fpath=(~/.zsh/completion $fpath)' ~/.zshrc; then
+  echo 'fpath=(~/.zsh/completion $fpath)' >> ~/.zshrc
 fi
-if ! grep -q 'autoload -Uz compinit && compinit' ~/.zshrc; then
-  echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
+if ! grep -q 'autoload -U compinit' ~/.zshrc; then
+  echo 'autoload -U compinit' >> ~/.zshrc
+  echo 'compinit' >> ~/.zshrc
 fi
 
 # Message de fin
@@ -96,4 +98,3 @@ read -n1 -r -p "Press SPACE to continue and switch to Zsh..." key
 
 # Appliquer les changements immédiatement
 exec zsh
-
