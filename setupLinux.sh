@@ -6,6 +6,10 @@ echo "==============================================="
 echo "🚀 Deno & Zsh Setup Script"
 echo "==============================================="
 echo ""
+echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
+echo "   - If you don’t have an account yet, go to **https://juwju.com** and create one."
+echo "   - You will need to log in during the setup process."
+echo ""
 echo "This script will install and configure the necessary components in three steps:"
 echo ""
 echo "1️⃣ **Update System**: Ensure your system is up to date."
@@ -48,16 +52,17 @@ else
   echo "Zsh is already the default shell."
 fi
 
-# Install Deno
+# Install Deno (without interactive prompt)
 echo "Installing Deno..."
+export DENO_INSTALL="$HOME/.deno"
 curl -fsSL https://deno.land/x/install/install.sh | sh
 
-# Add Deno to PATH for Zsh
+# Ensure Deno is added to PATH for Zsh
 echo "Adding Deno to PATH for Zsh..."
 echo 'export DENO_INSTALL="$HOME/.deno"' >> ~/.zshrc
 echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.zshrc
 
-# Set up Deno autocompletion for Zsh
+# Force Zsh completion setup (bypass interactive prompt)
 echo "Setting up Deno autocompletion for Zsh..."
 mkdir -p ~/.zsh/completions
 deno completions zsh > ~/.zsh/completions/_deno
