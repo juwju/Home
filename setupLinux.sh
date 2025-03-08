@@ -9,7 +9,7 @@ sudo setfacl -dR -m u:"$USER":rwx /opt
 clear
 cat <<'EOF'
 ===============================================
-🚀 Deno & Zsh Setup Script 1.5
+🚀 Deno & Zsh Setup Script 1.1
 ===============================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
@@ -115,5 +115,6 @@ fi
 
 # Switch to Zsh immediately
 exec zsh
+
 
 
