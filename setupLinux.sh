@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Opening message
-clear
+clear  # Correction de "lear" en "clear"
 echo "==============================================="
-echo "🚀 Deno & Zsh Setup Script"
+echo "🚀 Deno & Zsh Setup Script 1.2"
 echo "==============================================="
 echo ""
 echo "🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation."
@@ -47,28 +47,24 @@ fi
 # Check if Zsh is the default shell, change if needed
 if [[ "$SHELL" != *zsh ]]; then
   echo "Changing the default shell to Zsh..."
+  # Utilisez sudo pour éviter l'erreur d'authentification PAM
   sudo chsh -s $(which zsh) $USER
 else
   echo "Zsh is already the default shell."
 fi
 
-# Install Deno with automated responses
+# Install Deno with automated response
 echo "Installing Deno..."
 export DENO_INSTALL="$HOME/.deno"
 
-# Create temporary script to handle the Deno installation with automated response
-cat > /tmp/deno_install_script.sh << 'EOF'
-#!/bin/bash
-curl -fsSL https://deno.land/x/install/install.sh > /tmp/deno_installer.sh
+# Télécharger le script d'installation et le modifier pour automatiser la réponse
+curl -fsSL https://deno.land/install.sh > /tmp/deno_installer.sh
+# Remplacer la ligne qui demande une confirmation par une assignation directe
 sed -i 's/read -p "Edit shell configs to add deno to the PATH? (Y\/n) " yn/yn="Y"/g' /tmp/deno_installer.sh
+# Exécuter le script modifié
 bash /tmp/deno_installer.sh
-EOF
 
-# Make the script executable and run it
-chmod +x /tmp/deno_install_script.sh
-/tmp/deno_install_script.sh
-
-# Ensure Deno is added to PATH for Zsh
+# Assurer que Deno est ajouté au PATH pour Zsh
 echo "Ensuring Deno is added to PATH for Zsh..."
 if ! grep -q 'export DENO_INSTALL="$HOME/.deno"' ~/.zshrc; then
   echo 'export DENO_INSTALL="$HOME/.deno"' >> ~/.zshrc
@@ -77,23 +73,13 @@ if ! grep -q 'export PATH="$DENO_INSTALL/bin:$PATH"' ~/.zshrc; then
   echo 'export PATH="$DENO_INSTALL/bin:$PATH"' >> ~/.zshrc
 fi
 
-# Setup Deno autocompletion for Zsh
+# Configuration de l'autocomplétion pour Zsh
 echo "Setting up Deno autocompletion for Zsh..."
 mkdir -p ~/.zsh/completions
-
-# Create a script to handle the autocompletion with automated response
-cat > /tmp/deno_completion_script.sh << 'EOF'
-#!/bin/bash
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
+# Fournir "zsh" comme réponse à la question d'autocomplétion
 echo "zsh" | $HOME/.deno/bin/deno completions > ~/.zsh/completions/_deno
-EOF
 
-# Make the script executable and run it
-chmod +x /tmp/deno_completion_script.sh
-/tmp/deno_completion_script.sh
-
-# Add autocompletion configuration to .zshrc if not already present
+# Ajouter la configuration d'autocomplétion à .zshrc si elle n'est pas déjà présente
 if ! grep -q 'fpath+=~/.zsh/completions' ~/.zshrc; then
   echo 'fpath+=~/.zsh/completions' >> ~/.zshrc
 fi
@@ -101,10 +87,10 @@ if ! grep -q 'autoload -Uz compinit && compinit' ~/.zshrc; then
   echo 'autoload -Uz compinit && compinit' >> ~/.zshrc
 fi
 
-# Clean up temporary files
-rm -f /tmp/deno_install_script.sh /tmp/deno_installer.sh /tmp/deno_completion_script.sh
+# Nettoyer les fichiers temporaires
+rm -f /tmp/deno_installer.sh
 
-# Next steps message
+# Message de fin
 echo ""
 echo "✅ Installation completed!"
 echo "➡️ Next steps:"
@@ -113,8 +99,8 @@ echo "  2️⃣ Run 'deno --version' to check if Deno is installed"
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
-# Pause before switching shell
+# Pause avant de changer de shell
 read -n1 -r -p "Press SPACE to continue and switch to Zsh..." key
 
-# Apply changes immediately
+# Appliquer les changements immédiatement
 exec zsh
