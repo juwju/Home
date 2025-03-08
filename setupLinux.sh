@@ -25,14 +25,14 @@ This script will install and configure the necessary components in three steps:
 
 ➡️ Once the installation is complete, the script will automatically switch to Zsh.
 
-Press the SPACE BAR to continue or CTRL+C to exit...
+Press the SPACE BAR to continue or esc to exit...
 EOF
 
 # Wait for a key press
 read -n1 -r key
 if [[ "$key" != " " ]]; then
     echo -e "\nInstallation aborted."
-    exit 1
+    exit 0
 fi
 
 clear
