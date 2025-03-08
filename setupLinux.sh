@@ -4,7 +4,7 @@ set -e  # Stop the script immediately if any command fails
 clear
 cat <<'EOF'
 =========================================================
-🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.6
+🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.7
 =========================================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
@@ -24,7 +24,6 @@ This script will install and configure the necessary components in three steps:
 
 ➡️ Once the installation is complete, the script will automatically switch to Zsh.
 
-Press the SPACE BAR to continue or esc to exit...
 EOF
 
 sleep 2
