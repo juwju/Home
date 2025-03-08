@@ -1,6 +1,6 @@
 #!/bin/bash
 #TODO: ajouter la création de rep /home/JUWJU
-#TODO : Ajouter la connexion à Juwju via mot de passe et téléchargement de ./script et autre fichier dans /home/JUWJU
+#TODO: Ajouter la connexion à Juwju via mot de passe et téléchargement de ./script et autre fichier dans /home/JUWJU
 #set -e  # Stop the script immediately if any command fails
 
 clear
@@ -116,7 +116,13 @@ if ! grep -q 'autoload -U compinit' ~/.zshrc; then
   } >> ~/.zshrc
 fi
 
-mkdir "$HOME/JUWJU"
+# Add alias in Zsh to replace "deno task" with "jj"
+if ! grep -q 'alias jj="deno task"' ~/.zshrc; then
+  echo 'alias jj="deno task"' >> ~/.zshrc
+fi
+
+# Create the JUWJU directory in the user's home directory
+mkdir -p "$HOME/JUWJU"
 
 # Final message and switch to Zsh
 echo ""
@@ -131,8 +137,6 @@ sleep 4
 
 # Switch to Zsh immediately
 exec zsh
-
-
 
 
 
