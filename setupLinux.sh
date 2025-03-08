@@ -27,12 +27,7 @@ This script will install and configure the necessary components in three steps:
 Press the SPACE BAR to continue or esc to exit...
 EOF
 
-# Read one character from user input.
-read -n1 -r key
-if [[ "$key" != " " ]]; then
-    echo -e "\nInstallation aborted."
-    exit 1
-fi
+sleep 2
 
 clear
 
