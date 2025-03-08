@@ -1,11 +1,16 @@
 #!/bin/bash
-#set -e  # Stop the script immediately if any command fails
+set -e  # Stop the script immediately if any command fails
+
+# Grant full permissions on /opt and all its contents to the current user without changing ownership
+echo "Granting full permissions on /opt to user $USER..."
+sudo setfacl -R -m u:"$USER":rwx /opt
+sudo setfacl -dR -m u:"$USER":rwx /opt
 
 clear
 cat <<'EOF'
-=========================================================
-🚀 Setup Juwju requirement : Deno & Zsh Setup Script 1.9
-=========================================================
+===============================================
+🚀 Deno & Zsh Setup Script 1.5
+===============================================
 
 🔴 **IMPORTANT:** A free Juwju account is required to proceed with the installation.
    - If you don't have an account yet, go to https://juwju.com and create one.
@@ -24,9 +29,15 @@ This script will install and configure the necessary components in three steps:
 
 ➡️ Once the installation is complete, the script will automatically switch to Zsh.
 
+Press the SPACE BAR to continue or esc to exit...
 EOF
 
-sleep 4
+# Read one character from user input.
+read -n1 -r key
+if [[ "$key" != " " ]]; then
+    echo -e "\nInstallation aborted."
+    exit 1
+fi
 
 clear
 
@@ -96,8 +107,13 @@ echo "  2️⃣ Run 'deno --version' to verify the Deno installation."
 echo "  3️⃣ Start using Deno with Zsh!"
 echo ""
 
-sleep 4
+read -n1 -r -p "Press the SPACE BAR to continue and switch to Zsh..." key
+if [[ "$key" != " " ]]; then
+    echo -e "\nShell switch aborted."
+    exit 1
+fi
 
 # Switch to Zsh immediately
 exec zsh
+
 
